@@ -1,0 +1,586 @@
+ 
+    
+    
+######################################
+######   Presence Detection     ######
+######################################   
+
+##### Input Booleans track different device tracker options as one #####
+      # Mike has phone wifi, phone BT and BT keychain
+      # Ty has phone wifi and BT keychain  
+      # Any single device tracker can trigger 'home' state
+      # All device trackers must be 'not_home' to trigger 'not_home' state      
+- alias: Mike Away
+  condition:
+    condition: and
+    conditions:
+        - condition: state
+          entity_id: input_boolean.mike_home
+          state: 'on'
+        - condition: state
+          entity_id: device_tracker.mike_htchimawhl
+          state: 'not_home'
+        - condition: state
+          entity_id: device_tracker.splitvisionz
+          state: 'not_home'
+  trigger:
+    - platform: state
+      entity_id: sensor.mike_keys
+      to: 'not_home'
+  action:
+      service: homeassistant.turn_off
+      entity_id: input_boolean.mike_home
+      
+- alias: Mike Away 2
+  condition:
+    condition: and
+    conditions:
+        - condition: state
+          entity_id: input_boolean.mike_home
+          state: 'on'
+        - condition: state
+          entity_id: sensor.mike_keys
+          state: 'not_home'
+        - condition: state
+          entity_id: device_tracker.splitvisionz
+          state: 'not_home'
+  trigger:
+    - platform: state
+      entity_id: device_tracker.mike_htchimawhl
+      to: 'not_home'
+  action:
+      service: homeassistant.turn_off
+      entity_id: input_boolean.mike_home
+      
+        
+- alias: Mike Away 3
+  condition:
+    condition: and
+    conditions:
+        - condition: state
+          entity_id: input_boolean.mike_home
+          state: 'on'
+        - condition: state
+          entity_id: sensor.mike_keys
+          state: 'not_home'
+        - condition: state
+          entity_id: device_tracker.mike_htchimawhl
+          state: 'not_home'
+  trigger:
+    - platform: state
+      entity_id: device_tracker.splitvisionz
+      to: 'not_home'
+  action:
+      service: homeassistant.turn_off
+      entity_id: input_boolean.mike_home    
+      
+      
+- alias: Mike Home
+  condition:
+    condition: state
+    entity_id: input_boolean.mike_home
+    state: 'off'
+  trigger:
+    - platform: state
+      entity_id: device_tracker.mike_htchimawhl
+      to: 'home'
+    - platform: state
+      entity_id: device_tracker.splitvisionz
+      to: 'home'
+    - platform: state
+      entity_id: sensor.mike_keys
+      to: 'home'
+  action:
+    - service: homeassistant.turn_on
+      entity_id: input_boolean.mike_home 
+    - service: ifttt.trigger
+      data: {"event":"home"}    
+      
+         
+
+
+- alias: Ty Away
+  condition:
+    condition: and
+    conditions:
+        - condition: state
+          entity_id: input_boolean.ty_home  
+          state: 'on'
+        - condition: state
+          entity_id: sensor.tyler_keys
+          state: 'not_home'
+  trigger:
+    - platform: state
+      entity_id: device_tracker.b81daad6d1d0
+      to: 'not_home'
+  action:
+      service: homeassistant.turn_off
+      entity_id: input_boolean.ty_home      
+      
+      
+      
+- alias: Ty Away 2
+  condition:
+    condition: and
+    conditions:
+        - condition: state
+          entity_id: input_boolean.ty_home  
+          state: 'on'
+        - condition: state
+          entity_id: device_tracker.b81daad6d1d0
+          state: 'not_home'
+  trigger:
+    - platform: state
+      entity_id: sensor.tyler_keys
+      to: 'not_home'
+  action:
+      service: homeassistant.turn_off
+      entity_id: input_boolean.ty_home 
+      
+      
+      
+      
+- alias: Ty Home
+  condition:
+    condition: state
+    entity_id: input_boolean.ty_home  
+    state: 'off'
+  trigger:
+    - platform: state
+      entity_id: device_tracker.b81daad6d1d0
+      to: 'home'
+    - platform: state
+      entity_id: sensor.tyler_keys
+      to: 'home'
+  action:
+    - service: homeassistant.turn_on
+      entity_id: input_boolean.ty_home   
+    - service: ifttt.trigger
+      data: {"event":"home"}    
+      
+      
+
+######################################
+######     Away Automations     ######
+######################################         
+      
+- alias: Mike Left Ty Home
+  condition:
+    condition: state
+    entity_id: input_boolean.ty_home    
+    state: 'on'
+  trigger:
+    - platform: state
+      entity_id: input_boolean.mike_home
+      to: 'off'
+      for:
+        minutes: 10
+  action:
+      service: homeassistant.turn_off
+      entity_id: 
+        - switch.bathroom
+        - switch.bedroom
+        - switch.laptop_monitor
+        - switch.monitor
+        - switch.tv_bedroom
+      
+      
+      
+- alias: Mike Left Ty Not Home
+  condition:
+    condition: state
+    entity_id: input_boolean.ty_home    
+    state: 'off'
+  trigger:
+    - platform: state
+      entity_id: input_boolean.mike_home
+      to: 'off'
+      for:
+        minutes: 10
+  action:
+    - service: homeassistant.turn_off
+      entity_id: 
+        - switch.bathroom
+        - switch.bedroom
+        - switch.laptop_monitor
+        - switch.monitor
+        - switch.tv_bedroom
+        - switch.backlight
+        - switch.kitchen
+        - switch.lamp_one
+        - switch.lamp_two
+        - switch.main_bath
+        - switch.tv_livingroom
+        - switch.living_room_switch    
+    - service: ifttt.trigger
+      data: {"event":"not_home"}    
+         
+- alias: Ty Left Mike Not Home
+  condition:
+    condition: state
+    entity_id: input_boolean.mike_home
+    state: 'off'
+  trigger:
+    - platform: state
+      entity_id: input_boolean.ty_home    
+      to: 'off'
+      for:
+        minutes: 10
+  action:
+    - service: homeassistant.turn_off
+      entity_id: 
+        - switch.bathroom
+        - switch.bedroom
+        - switch.laptop_monitor
+        - switch.monitor
+        - switch.tv_bedroom
+        - switch.backlight
+        - switch.kitchen
+        - switch.lamp_one
+        - switch.lamp_two
+        - switch.main_bath
+        - switch.tv_livingroom
+        - switch.living_room_switch    
+    - service: ifttt.trigger
+      data: {"event":"not_home"}
+
+- alias: Sunset Lamp
+  condition:
+    condition: and
+    conditions:
+        - condition: state
+          entity_id: input_boolean.mike_home
+          state: 'off'
+        - condition: state
+          entity_id: input_boolean.ty_home
+          state: 'off'
+  trigger:
+    - platform: sun
+      event: sunset
+      offset: "-00:45:00"
+  action:
+      service: homeassistant.turn_on
+      entity_id: 
+        - switch.lamp_one
+            
+            
+- alias: Mike Left Ty Not Home after Sunset
+  condition:
+    condition: and
+    conditions:
+        - condition: state
+          entity_id: input_boolean.ty_home
+          state: 'off'
+        - condition: sun
+          before: sunrise
+          before_offset: "-1:00:00"
+        - condition: sun
+          after: sunrise
+          after_offset: "1:00:00"
+  trigger:
+    - platform: state
+      entity_id: input_boolean.mike_home
+      to: 'off'
+      for:
+        minutes: 15
+  action:
+      service: homeassistant.turn_on
+      entity_id: 
+        - switch.lamp_one
+            
+       
+- alias: Ty Left Mike Not Home after Sunset
+  condition:
+    condition: and
+    conditions:
+        - condition: state
+          entity_id: input_boolean.mike_home
+          state: 'off'
+        - condition: sun
+          before: sunrise
+          before_offset: "-1:00:00"
+        - condition: sun
+          after: sunrise
+          after_offset: "1:00:00"
+  trigger:
+    - platform: state
+      entity_id: input_boolean.ty_home
+      to: 'off'
+      for:
+        minutes: 15
+  action:
+      service: homeassistant.turn_on
+      entity_id: 
+        - switch.lamp_one
+
+######################################
+######     Morning Routine      ######
+######################################                     
+            
+- alias: "Lights on with morning alarm"
+  trigger:
+    platform: time
+    at: '5:00:00'
+  action:
+      service: homeassistant.turn_on
+      entity_id: 
+        - switch.bedroom
+        - switch.tv_bedroom     
+
+
+
+
+######################################
+######     Laundry Routines     ######
+######################################       
+
+##### Input_Bools to help track on/off states more accurately  ######
+- alias: Washer Bool On
+  condition:
+    condition: state
+    entity_id: input_boolean.washer_bool 
+    state: 'off'
+  trigger:
+    - platform: state
+      entity_id: switch.washer
+      to: 'on'
+      for:
+        minutes: 5
+  action:
+    - service: homeassistant.turn_on
+      entity_id: input_boolean.washer_bool   
+    
+- alias: Dryer Bool On
+  condition:
+    condition: state
+    entity_id: input_boolean.dryer_bool
+    state: 'off'
+  trigger:
+    - platform: state
+      entity_id: switch.dryer
+      to: 'on'
+      for:
+        minutes: 5
+  action:
+    - service: homeassistant.turn_on
+      entity_id: input_boolean.dryer_bool  
+    
+##### Flash Lights when washer & dryer are done  #####      
+- alias: Flash lights after dryer off
+  condition: 
+    condition: and
+    conditions:
+        - condition: state
+          entity_id: switch.bedroom
+          state: 'off'
+        - condition: state
+          entity_id: switch.washer
+          state: 'off'
+        - condition: state
+          entity_id: input_boolean.dryer_bool
+          state: 'on'
+  trigger:
+    - platform: state
+      entity_id: switch.dryer
+      to: 'off'
+      for:
+        minutes: 2
+  action:
+    - service: script.turn_on
+      entity_id: script.laundry_done_off
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.dryer_bool   
+
+        
+- alias: Flash lights after dryer on
+  condition: 
+    condition: and
+    conditions:
+        - condition: state
+          entity_id: switch.bedroom
+          state: 'on'
+        - condition: state
+          entity_id: switch.washer
+          state: 'off'
+        - condition: state
+          entity_id: input_boolean.dryer_bool
+          state: 'on'
+  trigger:
+    - platform: state
+      entity_id: switch.dryer
+      to: 'off'
+      for:
+        minutes: 2
+  action:
+    - service: script.turn_on
+      entity_id: script.laundry_done_on
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.dryer_bool   
+    
+- alias: Flash lights after washer on
+  condition: 
+    condition: and
+    conditions:
+        - condition: state
+          entity_id: switch.bedroom
+          state: 'on'
+        - condition: state
+          entity_id: switch.dryer
+          state: 'off'
+        - condition: state
+          entity_id: input_boolean.washer_bool
+          state: 'on'
+  trigger:
+    - platform: state
+      entity_id: switch.washer
+      to: 'off'
+      for:
+        minutes: 2
+  action:
+    - service: script.turn_on
+      entity_id: script.laundry_done_on
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.washer_bool   
+
+- alias: Flash lights after washer off
+  condition: 
+    condition: and
+    conditions:
+        - condition: state
+          entity_id: switch.bedroom
+          state: 'off'
+        - condition: state
+          entity_id: switch.dryer
+          state: 'off'
+        - condition: state
+          entity_id: input_boolean.washer_bool
+          state: 'on'
+  trigger:
+    - platform: state
+      entity_id: switch.washer
+      to: 'off'
+      for:
+        minutes: 2
+  action:
+    - service: script.turn_on
+      entity_id: script.laundry_done_off
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.washer_bool   
+    
+     
+        
+- alias: Flash lights after dryer off living
+  condition: 
+    condition: and
+    conditions:
+        - condition: state
+          entity_id: switch.living_room_switch
+          state: 'off'
+        - condition: state
+          entity_id: switch.washer
+          state: 'off'
+        - condition: state
+          entity_id: input_boolean.dryer_bool
+          state: 'on'
+  trigger:
+    - platform: state
+      entity_id: switch.dryer
+      to: 'off'
+      for:
+        minutes: 2
+  action:
+    - service: script.turn_on
+      entity_id: script.laundry_done_off_living
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.dryer_bool   
+
+        
+- alias: Flash lights after dryer on living
+  condition: 
+    condition: and
+    conditions:
+        - condition: state
+          entity_id: switch.living_room_switch
+          state: 'on'
+        - condition: state
+          entity_id: switch.washer
+          state: 'off'
+        - condition: state
+          entity_id: input_boolean.dryer_bool
+          state: 'on'
+  trigger:
+    - platform: state
+      entity_id: switch.dryer
+      to: 'off'
+      for:
+        minutes: 2
+  action:
+    - service: script.turn_on
+      entity_id: script.laundry_done_on_living
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.dryer_bool   
+    
+- alias: Flash lights after washer on living
+  condition: 
+    condition: and
+    conditions:
+        - condition: state
+          entity_id: switch.living_room_switch
+          state: 'on'
+        - condition: state
+          entity_id: switch.dryer
+          state: 'off'
+        - condition: state
+          entity_id: input_boolean.washer_bool
+          state: 'on'
+  trigger:
+    - platform: state
+      entity_id: switch.washer
+      to: 'off'
+      for:
+        minutes: 2
+  action:
+    - service: script.turn_on
+      entity_id: script.laundry_done_on_living
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.washer_bool   
+
+- alias: Flash lights after washer off living
+  condition: 
+    condition: and
+    conditions:
+        - condition: state
+          entity_id: switch.living_room_switch
+          state: 'off'
+        - condition: state
+          entity_id: switch.dryer
+          state: 'off'
+        - condition: state
+          entity_id: input_boolean.washer_bool
+          state: 'on'
+  trigger:
+    - platform: state
+      entity_id: switch.washer
+      to: 'off'
+      for:
+        minutes: 2
+  action:
+    - service: script.turn_on
+      entity_id: script.laundry_done_off_living
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.washer_bool   
+  
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

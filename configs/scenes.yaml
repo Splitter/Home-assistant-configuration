@@ -1,0 +1,39 @@
+
+  - name: Movie Mode
+    entities:
+      switch.living_room_switch: off
+      switch.lamp_one: off
+      switch.lamp_two: off
+      switch.backlight: on
+      
+
+  - name: Home from work
+    entities:
+      switch.living_room_switch: on
+      switch.lamp_one: off
+      switch.lamp_two: off
+      switch.backlight: off 
+      switch.main_bath: off
+      switch.kitchen: on
+      switch.bathroom: on
+      switch.bedroom: on
+      switch.tv_bedroom: off
+      switch.spare_room: off
+      switch.dining_room: off
+      script.home_from_work2:
+        state: on
+
+  - name: Bed Time
+    entities:
+      switch.living_room_switch: off
+      switch.lamp_one: off
+      switch.lamp_two: off
+      switch.backlight: off 
+      switch.kitchen: off
+      switch.bathroom: off
+      switch.bedroom: off
+      switch.dining_room: off
+      switch.laptop_monitor: off
+      switch.monitor: off
+
+ 

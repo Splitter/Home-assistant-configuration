@@ -1,0 +1,181 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  auth_providers:
+    - type: homeassistant
+    - type: legacy_api_password
+    - type: trusted_networks
+  # Location required to calculate the time the sun rises and sets
+  latitude: 42.203
+  longitude: -83.3166
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 189
+  # metric for Metric, imperial for Imperial
+  unit_system: imperial
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: America/Detroit
+  customize: !include ./configs/customize.yaml
+# Enables the frontend
+frontend:
+  extra_html_url:
+    - /local/custom_ui/state-card-floorplan.html
+    
+panel_custom:
+  - name: floorplan
+    sidebar_title: Floorplan
+    sidebar_icon: mdi:home
+    url_path: floorplan
+    config: !include floorplan.yaml
+    
+emulated_hue:
+  exposed_domains:
+    - light
+    - switch
+weather:
+  - platform: openweathermap
+    name: Romulus 
+    api_key: !secret weather_api_password
+    latitude: 42.203
+    longitude: -83.3166
+http:
+
+  api_password: !secret api_password
+  trusted_networks: 
+    - 172.16.0.0/12
+    - 172.30.32.2
+  ip_ban_enabled: true
+  login_attempts_threshold: 3
+
+  
+auth:
+# Checks for available updates
+updater:
+
+# Discover some devices automatically
+discovery:
+
+hassio:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time.
+history:
+
+# View all events in a logbook
+logbook:
+
+# Track the sun
+sun:
+
+# Remotely open browsers to specified website
+browser: 
+
+
+# Text to speech
+tts:
+  platform: google
+
+zwave:
+  usb_path: /dev/ttyACM0
+  #config_path: /usr/local/lib/python3.5/dist-packages/libopenzwave-0.3.1-py3.5-linux-x86_64.egg/#config
+  #customize:
+  #  switch.__switch_2_0:
+   #   polling_intensity: 1
+  
+mqtt:
+  broker: core-mosquitto
+  port: 1883
+  client_id: home-assistant-1
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+    
+device_tracker:
+
+  - platform: bluetooth_tracker
+    consider_home: 60
+    track_new_devices: yes
+  
+  - platform: nmap_tracker
+    hosts: 
+        - 10.0.0.186
+        - 10.0.0.12
+    home_interval: 2
+    track_new_devices: no
+    
+#  - platform: owntracks
+#    max_gps_accuracy: 200
+#    waypoints: True
+#    waypoint_whitelist:
+ #     - Mike
+  
+media_player 1:
+  platform: kodi
+  name: Kodi Living Room
+  host: !secret kodi_1
+  port: 8080
+  username: kodi
+  password: !secret kodi_1_password
+media_player 2:
+  platform: kodi
+  name: Kodi Bedroom
+  host: !secret kodi_2
+  port: 8080
+  username: kodi
+  password: !secret kodi_2_password
+media_player 3:
+  platform: mpd
+  name: Music Server
+  host: localhost
+  port: 6800
+
+
+config:
+
+ifttt:
+  key: !secret ifttt_key
+
+octoprint:
+  host: 10.0.0.144:5589
+  api_key: !secret octoprint_key
+  bed: true
+  number_of_tools: 1
+
+
+input_boolean:
+  mike_home:
+    name: mike home
+    initial: on
+    icon: mdi:account    
+  ty_home:
+    name: ty home
+    initial: on
+    icon: mdi:account      
+  washer_bool:
+    name: Washer Bool
+    initial: on
+    icon: mdi:washing-machine    
+  dryer_bool:
+    name: Dryer Bool
+    initial: on
+    icon: mdi:washing-machine    
+      
+      
+sensor: !include ./configs/sensors.yaml
+group: !include ./configs/groups.yaml
+switch: !include ./configs/switches.yaml          
+automation old: !include ./configs/automation.yaml       
+automation: !include automations.yaml
+script: !include ./configs/scripts.yaml
+cover: !include ./configs/covers.yaml
+camera: !include ./configs/cameras.yaml
+scene: !include ./configs/scenes.yaml
+                        
+
+binary_sensor:
+  - platform: mqtt
+    state_topic: dummy/floorplan/sensor
+    name: Floorplan
+    
+    
+    

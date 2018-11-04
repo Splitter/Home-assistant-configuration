@@ -1,0 +1,220 @@
+######################################
+######     SONOFF RELAYS       #######
+######################################
+
+  - platform: broadlink
+    host: 10.0.0.18
+    mac: '34:EA:34:CC:C8:E6'
+    timeout: 15
+    switches:
+        tv_bedroom:
+            friendly_name: "Bedroom TV"
+            command_on:
+                'JgBgAAABJ5QSExE4ETkRFBAUERQRFBE4ETkRExE5ERQRExEUERQRFBE4ETkQORI4EBQRFBEUERQQFBEUERQRFBA5ETkQORE5EAAFkwABJksRAAxQAAEnSxAADFEAASZLEQANBQAAAAAAAAAA'
+            command_off:
+                'JgBgAAABJ5QSExE4ETkRFBAUERQRFBE4ETkRExE5ERQRExEUERQRFBE4ETkQORI4EBQRFBEUERQQFBEUERQRFBA5ETkQORE5EAAFkwABJksRAAxQAAEnSxAADFEAASZLEQANBQAAAAAAAAAA'
+    
+  
+  - platform: broadlink
+    host: 10.0.0.188
+    mac: '34:EA:34:6F:9B:70'
+    timeout: 15
+    switches:
+        tv_livingroom:
+            friendly_name: "Living Room TV"
+            command_on:
+                'JgBGAJOVEjgSORE5ERURFBEVERQRFBI5ETkROhEUERURFBEUEhQRFBE6ERQRFREUERQSFBEUEToRFBE6ETkRORI5ETkROhEADQUAAA=='
+            command_off:
+                'JgBGAJOVEjgSORE5ERURFBEVERQRFBI5ETkROhEUERURFBEUEhQRFBE6ERQRFREUERQSFBEUEToRFBE6ETkRORI5ETkROhEADQUAAA=='
+        tv_livingroom_cable:
+            friendly_name: "Cable"
+            command_on:
+                'JgBIAAABJJITERQRFBEVERQRFBEUERQ1FREUERQRFBEUNhM2FDYUERURFDUUERQRFDYUNhM2FDYUNRQRFDYUNhQRFRETERQRFAANBQ=='
+        tv_livingroom_fire:
+            friendly_name: "Fire Stick"
+            command_on:
+                'JgBOAAABI5USExITEhQRFBIUERQSExI5ERMSFBITEhQSOBI5ETgSExI5EjgSFBITEDkSOBI5EjcSFBITEjgSORATERMSFBITEgAFpf5LEgANBQAAAAAAAAAAAAA='
+        backlight:
+            friendly_name: "Backlight"
+            command_on:
+                'JgBIAAABJpQSEhMSFBETExISFBISExMSEzcTNxM2FDcTERQ3EzYTNxQ2EzcTEhMSExITExMRFBITEhQREzcTNxM2FDcTNhM3FAANBQ=='
+            command_off:
+                'JgBIAAABJpQTEhMSExITExISFBISExQREzcTNxI3FDYTEhQ3EjcTNxMSEzcTEhMSExIUERMTExEUNxMRFDcTNhM3FDYTNxM3EwANBQ=='
+        ac_livingroom:
+            friendly_name: "Living Room AC"
+            command_on:
+                'JgB+AAABEYwQNhE2EDcQExA2EBQQNxA3D40QNhA3EBMRNhETEBQQFBATEwACfAABE40PNxA2EDcQFBA3EBQQNhA3EI0PNxA2ERIQNhETEBQQExETEwACegABEo0QNhE1ETYRExA3DxQQNhA3EI0QNxA2EBMRNhATERMQFBATEwANBQAAAAAAAAAAAAA='
+            command_off:
+                'JgB+AAABEYwQNhE2EDcQExA2EBQQNxA3D40QNhA3EBMRNhETEBQQFBATEwACfAABE40PNxA2EDcQFBA3EBQQNhA3EI0PNxA2ERIQNhETEBQQExETEwACegABEo0QNhE1ETYRExA3DxQQNhA3EI0QNxA2EBMRNhATERMQFBATEwANBQAAAAAAAAAAAAA='
+        
+        ac_kitchen:
+            friendly_name: "Kitchen AC"
+            command_on:
+                'JgDKAJOPEzUTERM1ExETERMRExETNRMRExETERM1EzQUEBQQFBETERM1EzQUEBQQFBAUEBQREzQUNBQ0EzUTNRM0FDQUNBM1EzUTNRM0FDQUNBM1EzUTNRM0FDQUNBM1ExETNRMRE6uTjRUREzUTERM0FDQUNBQ0ExETNRM1EzQUERMREzQUNBQ0EzUTERMREzUTNRM0FDQUNBQQFBAUEBQQFBAUEBQQFBETERMRExETERMRExETERMRExETERMRExETERM1ExETNRMADQUAAAAAAAAAAAAAAAAAAA=='
+            command_off:
+                'JgDKAJOPEzUTERM1ExETERMRExETNRMRExETERM1EzQUEBQQFBETERM1EzQUEBQQFBAUEBQREzQUNBQ0EzUTNRM0FDQUNBM1EzUTNRM0FDQUNBM1EzUTNRM0FDQUNBM1ExETNRMRE6uTjRUREzUTERM0FDQUNBQ0ExETNRM1EzQUERMREzQUNBQ0EzUTERMREzUTNRM0FDQUNBQQFBAUEBQQFBAUEBQQFBETERMRExETERMRExETERMRExETERMRExETERM1ExETNRMADQUAAAAAAAAAAAAAAAAAAA=='       
+
+
+
+  - platform: mqtt
+    name: Bedroom
+    state_topic: "stat/bedroom/POWER"
+    command_topic: "cmnd/bedroom/POWER"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+    
+  - platform: mqtt
+    name: Bathroom
+    state_topic: "stat/bathroom/POWER"
+    command_topic: "cmnd/bathroom/POWER"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+    
+  - platform: mqtt
+    name: Main Bath
+    state_topic: "stat/dining/POWER"
+    command_topic: "cmnd/dining/POWER"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+    
+  - platform: mqtt
+    name: Dining Room
+    state_topic: "stat/dining1/POWER"
+    command_topic: "cmnd/dining1/POWER"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+    
+  - platform: mqtt
+    name: Spare Room
+    state_topic: "stat/one/POWER"
+    command_topic: "cmnd/one/POWER"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+    
+  - platform: mqtt
+    name: Kitchen
+    state_topic: "stat/kitchen/POWER"
+    command_topic: "cmnd/kitchen/POWER"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true  
+    
+  - platform: mqtt
+    name: Lamp One
+    state_topic: "stat/sonoff/POWER1"
+    command_topic: "cmnd/sonoff/POWER1"
+    optimistic: false
+    qos: 1
+    retain: true
+    payload_on: "ON"
+    payload_off: "OFF"
+    
+  - platform: mqtt
+    name: Lamp Two
+    state_topic: "stat/sonoff/POWER2"
+    command_topic: "cmnd/sonoff/POWER2"
+    optimistic: false
+    qos: 1
+    retain: true
+    payload_on: "ON"
+    payload_off: "OFF"
+
+  - platform: mqtt
+    name: Eclosure Air Filter
+    state_topic: "stat/printerfan/POWER"
+    command_topic: "cmnd/printerfan/POWER"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+
+  - platform: mqtt
+    name: Enclosure Lights
+    state_topic: "stat/printerlights/POWER"
+    command_topic: "cmnd/printerlights/POWER"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+
+  - platform: mqtt
+    name: Monitor
+    state_topic: "stat/bedroom_monitor/POWER"
+    command_topic: "cmnd/bedroom_monitor/POWER"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+
+  - platform: mqtt
+    name: Laptop Monitor
+    state_topic: "stat/laptop_monitor/POWER"
+    command_topic: "cmnd/laptop_monitor/POWER"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+
+  - platform: mqtt
+    name: Emergency Shutoff
+    state_topic: "stat/printer_power/POWER"
+    command_topic: "cmnd/printer_power/POWER"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+
+
+  - platform: mqtt
+    name: AirWick One
+    state_topic: "stat/airwick_one/POWER"
+    command_topic: "cmnd/airwick_one/POWER"
+    payload_on: "ON"
+    payload_off: "OFF"
+
+  - platform: mqtt
+    name: AirWick Two
+    state_topic: "stat/airwick_two/POWER"
+    command_topic: "cmnd/airwick_two/POWER"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+
+
+  - platform: mqtt
+    name: Washer
+    command_topic: "cmnd/appliance/washer"
+    state_topic: "cmnd/appliance/washer"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+
+
+  - platform: mqtt
+    name: Dryer
+    command_topic: "cmnd/appliance/dryer"
+    state_topic: "cmnd/appliance/dryer"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+
+
+  - platform: mqtt
+    name: "Roomba"
+    command_topic: "roomba/commands"
+    payload_on: "start"
+    payload_off: "stop" 

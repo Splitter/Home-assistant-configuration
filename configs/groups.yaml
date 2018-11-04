@@ -1,0 +1,174 @@
+  
+  kitchen_view:
+    name: Kitchen
+    view: yes
+    entities:
+      - group.kitchen   
+      - group.misc_kit
+      
+      
+  bedroom_view:
+    name: Bedroom
+    view: yes
+    entities:
+      - group.bedroom
+
+  cameras_view:
+    name: Security
+    view: yes
+    entities:
+      - camera.front_door
+      - camera.living_room
+      - camera.kitchen
+      
+
+  conditions_view:
+    name: Conditions
+    view: yes
+    entities:
+      - group.conditions
+      - group.conditions_two
+
+  printer_view:
+    name: 3D Printer
+    view: yes
+    entities:
+      - camera.printer
+      - group.octoprint_sensors     
+      - group.printer_enclosure
+      - group.octoprint_weblinks
+      
+  default_view:
+    name: Main Area
+    view: yes
+    entities:
+      - group.living_room
+      - group.misc
+      - media_player.kodi_living_room
+      - media_player.music_server
+      - group.living_room_scenes
+   
+
+  printer_enclosure:
+    name: Printer Enclosure  
+    entities:    
+      - sensor.enclosure_temp
+      - sensor.enclosure_humidity    
+      - switch.eclosure_air_filter
+      - switch.enclosure_lights
+
+  kitchen:
+    name: Kitchen
+    entities:
+      - switch.kitchen
+      - switch.dining_room
+      - switch.ac_kitchen
+   
+  living_room:
+    name: Living Room
+    entities:
+      - switch.living_room_switch
+      - switch.lamp_one
+      - switch.lamp_two
+      - switch.ac_livingroom
+      - switch.tv_livingroom
+      - switch.tv_livingroom_cable
+      - switch.tv_livingroom_fire
+      - switch.backlight
+      
+      
+  living_room_lamps:
+    name: Living Room Lamps
+    entities:
+      - switch.lamp_one
+      - switch.lamp_two
+      
+  bedroom:
+    name: Bedroom
+    entities:
+      - switch.bedroom
+      - switch.bathroom
+      - switch.tv_bedroom
+      - switch.monitor
+      - switch.laptop_monitor
+      - media_player.kodi_bedroom
+      - media_player.roku_2n001u665433
+      
+  misc_kit:
+    name: Misc.
+    entities:
+      - sensor.washer_status
+      - sensor.dryer_status
+  misc:
+    name: Misc.
+    entities:
+      - switch.airwick_one
+      - switch.spare_room
+      - switch.main_bath
+      - switch.roomba
+      
+  conditions:
+    name: Conditions
+    entities:
+      - input_boolean.mike_home   
+      - input_boolean.ty_home   
+      - sun.sun
+      - sensor.time_to_work
+      - sensor.current_temperature
+      - sensor.current_snow
+      - sensor.current_rain
+      - sensor.current_condition
+      - sensor.current_cloud_coverage
+      - sensor.current_energy_usage
+
+  conditions_two:
+    name: In Depth
+    entities:
+      - camera.radar
+      - weather.romulus
+      
+      
+  media_music:
+      name: Music
+      entities:      
+      - media_player.music_server
+
+  media:
+    name: Media Systems
+    entities:
+      - media_player.kodi_living_room
+      - media_player.kodi_bedroom
+      - media_player.roku_2n001u665433
+      
+      
+  living_room_scenes:
+    name: Scenes
+    entities:
+      - scene.movie_mode
+      - scene.home_from_work
+      - scene.bed_time
+      - input_boolean.away_mode
+
+  octoprint_sensors:
+    name: Octoprint
+    entities:
+      - sensor.req_bed
+      - sensor.bed
+      - sensor.req_hotend
+      - sensor.hotend
+      - sensor.octoprint_current_state
+      - sensor.octoprint_job_percentage
+
+
+  octoprint_weblinks:
+    name: Printer Misc
+    entities:
+      - switch.emergency_shutoff
+      - weblink.inside_network
+      - weblink.outside_network
+
+  zones:
+    name: Zones
+    entities:
+      - binary_sensor.floorplan
+

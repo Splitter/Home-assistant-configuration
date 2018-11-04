@@ -1,0 +1,264 @@
+  restart_home_assistant:
+    alias: Restart Home Assistant
+    sequence:
+      - alias: Restart Home Assistant
+        service: homeassistant.restart
+  reload_home_assistant:
+    alias: Reload Home Assistant Config
+    sequence:
+      - alias: Reload Home Assistant Config
+        service: homeassistant.reload_core_config
+
+
+  home_from_work2:
+    alias: home from work
+    sequence:
+        - delay:
+            minutes: 2
+        - alias: Home Kitchen Off
+          service: homeassistant.turn_off
+          data:
+            entity_id: switch.kitchen
+        - alias: Home Living Off
+          service: homeassistant.turn_off
+          data:
+            entity_id: switch.living_room_switch
+          
+          
+  laundry_done_off:
+    alias: Flash for laundry off
+    sequence:
+      - alias: Bedroom Laundry On
+        service: homeassistant.turn_on
+        data:
+          entity_id: switch.bedroom
+      - delay:
+          # time for flash light on
+          milliseconds: 350
+      - alias: Bedroom Laundry Off
+        service: homeassistant.turn_off
+        data:
+          entity_id: switch.bedroom
+      - delay:
+          # time for flash light off
+          milliseconds: 350
+      - alias: Bedroom Laundry On
+        service: homeassistant.turn_on
+        data:
+          entity_id: switch.bedroom
+      - delay:
+          # time for flash light on
+          milliseconds: 350
+      - alias: Bedroom Laundry Off
+        service: homeassistant.turn_off
+        data:
+          entity_id: switch.bedroom
+      - delay:
+          # time for flash light off
+          milliseconds: 350
+      - alias: Bedroom Laundry On
+        service: homeassistant.turn_on
+        data:
+          entity_id: switch.bedroom
+      - delay:
+          # time for flash light on
+          milliseconds: 350
+      - alias: Bedroom Laundry Off
+        service: homeassistant.turn_off
+        data:
+          entity_id: switch.bedroom
+      - delay:
+          # time for flash light off
+          milliseconds: 350
+      - alias: Bedroom Laundry On
+        service: homeassistant.turn_on
+        data:
+          entity_id: switch.bedroom
+      - delay:
+          # time for flash light on
+          milliseconds: 350
+      - alias: Bedroom Laundry Off
+        service: homeassistant.turn_off
+        data:
+          entity_id: switch.bedroom
+          
+          
+  laundry_done_on:
+    alias: Flash for laundry on
+    sequence:
+      - alias: Bedroom Laundry Off
+        service: homeassistant.turn_off
+        data:
+          entity_id: switch.bedroom
+      - delay:
+          # time for flash light off
+          milliseconds: 350
+      - alias: Bedroom Laundry On
+        service: homeassistant.turn_on
+        data:
+          entity_id: switch.bedroom
+      - delay:
+          # time for flash light on
+          milliseconds: 350
+      - alias: Bedroom Laundry Off
+        service: homeassistant.turn_off
+        data:
+          entity_id: switch.bedroom
+      - delay:
+          # time for flash light off
+          milliseconds: 350
+      - alias: Bedroom Laundry On
+        service: homeassistant.turn_on
+        data:
+          entity_id: switch.bedroom
+      - delay:
+          # time for flash light on
+          milliseconds: 350
+      - alias: Bedroom Laundry Off
+        service: homeassistant.turn_off
+        data:
+          entity_id: switch.bedroom
+      - delay:
+          # time for flash light off
+          milliseconds: 350
+      - alias: Bedroom Laundry On
+        service: homeassistant.turn_on
+        data:
+          entity_id: switch.bedroom
+      - delay:
+          # time for flash light on
+          milliseconds: 350
+      - alias: Bedroom Laundry Off
+        service: homeassistant.turn_off
+        data:
+          entity_id: switch.bedroom
+      - delay:
+          # time for flash light on
+          milliseconds: 350
+      - alias: Bedroom Laundry On
+        service: homeassistant.turn_on
+        data:
+          entity_id: switch.bedroom
+          
+          
+  laundry_done_off_living:
+    alias: Flash for laundry off living
+    sequence:
+      - alias: Living Laundry On
+        service: homeassistant.turn_on
+        data:
+          entity_id: switch.living_room_switch
+      - delay:
+          # time for flash light on
+          milliseconds: 350
+      - alias: Living Laundry Off
+        service: homeassistant.turn_off
+        data:
+          entity_id: switch.living_room_switch
+      - delay:
+          # time for flash light off
+          milliseconds: 350
+      - alias: Living Laundry On
+        service: homeassistant.turn_on
+        data:
+          entity_id: switch.living_room_switch
+      - delay:
+          # time for flash light on
+          milliseconds: 350
+      - alias: Living Laundry Off
+        service: homeassistant.turn_off
+        data:
+          entity_id: switch.living_room_switch
+      - delay:
+          # time for flash light off
+          milliseconds: 350
+      - alias: Living Laundry On
+        service: homeassistant.turn_on
+        data:
+          entity_id: switch.living_room_switch
+      - delay:
+          # time for flash light on
+          milliseconds: 350
+      - alias: Living Laundry Off
+        service: homeassistant.turn_off
+        data:
+          entity_id: switch.living_room_switch
+      - delay:
+          # time for flash light off
+          milliseconds: 350
+      - alias: Living Laundry On
+        service: homeassistant.turn_on
+        data:
+          entity_id: switch.living_room_switch
+      - delay:
+          # time for flash light on
+          milliseconds: 350
+      - alias: Living Laundry Off
+        service: homeassistant.turn_off
+        data:
+          entity_id: switch.living_room_switch
+          
+          
+  laundry_done_on_living:
+    alias: Flash for laundry on living
+    sequence:
+      - alias: Living Laundry Off
+        service: homeassistant.turn_off
+        data:
+          entity_id: switch.living_room_switch
+      - delay:
+          # time for flash light off
+          milliseconds: 350
+      - alias: Living Laundry On
+        service: homeassistant.turn_on
+        data:
+          entity_id: switch.living_room_switch
+      - delay:
+          # time for flash light on
+          milliseconds: 350
+      - alias: Living Laundry Off
+        service: homeassistant.turn_off
+        data:
+          entity_id: switch.living_room_switch
+      - delay:
+          # time for flash light off
+          milliseconds: 350
+      - alias: Living Laundry On
+        service: homeassistant.turn_on
+        data:
+          entity_id: switch.living_room_switch
+      - delay:
+          # time for flash light on
+          milliseconds: 350
+      - alias: Living Laundry Off
+        service: homeassistant.turn_off
+        data:
+          entity_id: switch.living_room_switch
+      - delay:
+          # time for flash light off
+          milliseconds: 350
+      - alias: Living Laundry On
+        service: homeassistant.turn_on
+        data:
+          entity_id: switch.living_room_switch
+      - delay:
+          # time for flash light on
+          milliseconds: 350
+      - alias: Living Laundry Off
+        service: homeassistant.turn_off
+        data:
+          entity_id: switch.living_room_switch
+      - delay:
+          # time for flash light on
+          milliseconds: 350
+      - alias: Living Laundry On
+        service: homeassistant.turn_on
+        data:
+          entity_id: switch.living_room_switch
+                   
+          
+          
+          
+          
+          
+          

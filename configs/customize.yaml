@@ -1,0 +1,32 @@
+    group.living_room_lamps:
+      hidden: true
+    switch.living_room_switch:
+      friendly_name: living room
+    media_player.kodi:
+      friendly_name: Living Room (Kodi)
+    media_player.kodi_2:
+      friendly_name: Bedroom (Kodi)
+    media_player.kodi_3:
+      friendly_name: Music Server
+
+    sensor.octoprint_actual_tool0_temp:
+      unit_of_measurement: celsius
+    sensor.octoprint_target_tool0_temp:
+      unit_of_measurement: celsius
+    sensor.octoprint_actual_bed_temp:
+      unit_of_measurement: celsius
+    sensor.octoprint_target_bed_temp:
+      unit_of_measurement: celsius
+      
+      
+    sensor.washer_status:
+      icon: mdi:washing-machine
+      # templates:
+        # icon_color: "if (state === 'off') return 'rgb(68, 115, 158)'; else return 'rgb(253, 215, 53)';"
+    sensor.dryer_status:
+      icon: mdi:washing-machine
+      # templates:
+        # icon_color: "if (state === 'off') return 'rgb(68, 115, 158)'; else return 'rgb(253, 215, 53)';"
+        
+        
+        

@@ -1,0 +1,143 @@
+
+  - platform: openweathermap
+    name: Current
+    api_key: !secret open_weather_key
+    forecast: 1
+    monitored_conditions:
+      - weather
+      - clouds
+      - rain
+      - snow
+      - temperature
+
+  - platform: google_travel_time
+    name: Time to Work
+    api_key: !secret google_api_key
+    origin: 38748 Navajo ct, Romulus MI 48174
+    destination: 2900 St. Jean, Detroit  MI 48214
+    
+  - platform: template
+    name: Travel Time
+    sensors:
+      work_time:
+        friendly_name: 'Time'
+        value_template: '{{ "%0.02d:%0.02d" | format(states("input_slider.workhour") | int, states("input_slider.workminutes") | int) }}'
+        
+  - platform: template
+    sensors:
+      mike:
+        friendly_name: "Mike"
+        value_template: >-
+          {%- if is_state("input_boolean.mike_home", "on")
+          -%}
+          Home
+          {%- else -%}
+          Not Home
+          {%- endif %}
+               
+  - platform: template
+    sensors:
+      tyler:
+        friendly_name: "Tyler"
+        value_template: >-
+          {%- if is_state("input_boolean.ty_home", "on")
+          -%}
+          Home
+          {%- else -%}
+          Not Home
+          {%- endif %}
+          
+  # - platform: mqtt
+    # name: "Dryer Status"
+    # state_topic: "sensor/dryer"
+    # unit_of_measurement: ""
+
+  - platform: template
+    sensors:
+      dryer_status:
+        friendly_name: "Dryer Status"
+        value_template: >-
+          {%- if is_state("switch.dryer", "on")
+          -%}
+          Running
+          {%- else -%}
+          Idle
+          {%- endif %}
+    
+    
+  # - platform: mqtt
+    # name: "Washer Status"
+    # state_topic: "sensor/washer"
+    # unit_of_measurement: ""
+
+  - platform: template
+    sensors:
+      washer_status:
+        friendly_name: "Washer Status"
+        value_template: >-
+          {%- if is_state("switch.washer", "on")
+          -%}
+          Running
+          {%- else -%}
+          Idle
+          {%- endif %}
+          
+          
+  - platform: dte_energy_bridge
+    ip: 10.0.0.208:8888/zigbee/se
+    scan_interval: 10
+
+# temperature Topic  
+  - platform: mqtt
+    state_topic: "tele/printertemp/SENSOR"
+    name: "Enclosure Temp"
+    qos: 0
+    unit_of_measurement: "°C"
+    value_template: '{{ value_json.DHT11.Temperature }}'
+
+  - platform: mqtt
+    state_topic: "tele/printertemp/SENSOR"
+    name: "Enclosure Humidity"
+    qos: 0
+    icon: mdi:water
+    unit_of_measurement: "%"
+    value_template: '{{ value_json.DHT11.Humidity }}'
+
+
+  - platform: octoprint
+    name: OctoPrint
+    monitored_conditions:
+      - Current State
+      - Temperatures
+      - Job Percentage
+
+  - platform: template
+    sensors:
+       hotend:
+         friendly_name: 'Actual Hotend'
+         value_template: "{{ states.sensor.octoprint_actual_tool0_temp.state  }}"
+         unit_of_measurement: °c
+       bed:
+         friendly_name: "Actual Bed"
+         value_template: "{{ states.sensor.octoprint_actual_bed_temp.state }}"
+         unit_of_measurement: °c
+       req_hotend:
+         friendly_name: 'Target Hotend'
+         value_template: "{{ states.sensor.octoprint_target_tool0_temp.state }}"
+         unit_of_measurement: °c
+       req_bed:
+         friendly_name: "Target Bed"
+         value_template: "{{ states.sensor.octoprint_target_bed_temp.state|float - 0 }}"
+         unit_of_measurement: °c
+
+  - platform: mqtt_room
+    device_id: ffffc20f5aa2
+    away_timeout: 30
+    state_topic: 'room_presence'
+    name: 'Mike Keys'
+
+  - platform: mqtt_room
+    device_id: ffffc1008597
+    away_timeout: 30
+    state_topic: 'room_presence'
+    name: 'Tyler Keys'
